@@ -304,13 +304,17 @@ nginx-config:
           ######################################## ADDED BY MARTIN ORDONEZ PUENTE ###############################
           # Add BOSH proxy_pass configuration for XMPP /http-bind/ 
           location /http-bind/ {
-          proxy_pass http://zeit.brain-it.us:5280/http-bind/;
+          proxy_pass http://192.168.1.88:5280/http-bind/;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Port $server_port;
           proxy_set_header X-Forwarded-Host $host;
+          proxy_buffering off;  # Optional: Disable buffering for real-time applications like BOSH
+          proxy_http_version 1.1;  # Ensure HTTP/1.1 for persistent connections
+          proxy_set_header Upgrade $http_upgrade;  # Required for WebSocket upgrades
+          proxy_set_header Connection "Upgrade";
           }
           ############################################### END ADDTION ##############################################
           # HSTS settings
