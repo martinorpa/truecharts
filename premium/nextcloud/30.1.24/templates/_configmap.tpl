@@ -301,7 +301,17 @@ nginx-config:
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           }
           {{- end }}
-
+          ######################################## ADDED BY MARTIN ORDONEZ PUENTE ###############################
+          # Add BOSH proxy_pass configuration for XMPP /http-bind/ 
+          location /http-bind/ {
+          proxy_pass http://zeit.brain-it.us:5280/http-bind/;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header X-Forwarded-Port $server_port;
+          }
+          ############################################### END ADDTION ##############################################
           # HSTS settings
           # WARNING: Only add the preload option once you read about
           # the consequences in https://hstspreload.org/. This option
